@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script src="../../js/jquery-3.4.1.js"></script>
+    <meta charset="UTF-8">
+    <title>用户调查</title>
+  <style>
+    body, html {
+      height: 100%;
+      background: #f7f7f7;
+    }
+    blockquote, html, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, textarea, ul {
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+    }
+    #SU {
+
+      position: relative;
+      *position: static;
+      width: 100%;
+      height: calc(100% - 42px);
+
+    }
+    .masterHeader {
+
+      position: relative;
+      z-index: 800;
+      background-color: #FFFFFF;
+      height: 56px;
+      font-size: 14px;
+      color: #262626;
+      margin: 0 auto;
+      box-shadow: 0px 1px 8px 0px rgba(0,0,0,0.12),0px 1px 0px 0px rgba(232,232,232,1);
+      *border-bottom: 1px solid #e8e8e8;
+
+    }
+    .my-container {
+      padding: 0 24px;
+      margin: 0 auto;
+      height: 100%;
+    }
+    .my-footer {
+
+      position: relative;
+      line-height: 40px;
+      display: block;
+      text-align: center;
+      height: 40px;
+
+    }
+    .wjxui-btn{
+      width: 100%;
+      padding: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 56px;
+      font-weight: 600;
+      cursor: pointer;
+      height: 56px;
+      background: #0095FF;
+      color: #fff !important;
+      margin-top: 24px;
+    }
+    .wjxui-btn:hover {
+
+      color: #fff !important;
+      background: #0086E6;
+
+    }
+    .edit{
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+<div id="SU">
+  <div class="SU masterHeader">
+    <div class="my-container">
+      <div>管理员</div>
+    </div>
+  </div>
+  <div style="width: 100%;height: calc(100% - 56px);">
+    <div class="my-container" style="display: flex;">
+    <div style="width: 300px;height: 100%;">
+      <button class="wjxui-btn" onclick="creat_btn()">+创建问卷</button>
+      <button class="wjxui-btn" >全部问卷</button>
+      <button class="wjxui-btn" >回收站</button>
+    </div>
+    <div style="display: flex;width: calc(100% - 300px);height: 100%;">
+      <div  style="width:calc(100% - 24px);height:100%;margin-left:24px;">
+        <div style="display:flex;height: 56px;width: 100%;margin-top: 24px;position: relative;">
+
+            <h2 style="line-height: 56px;">问卷列表</h2>
+
+          <div style="float: right;width: 300px;height: 56px;position: absolute;right: 0;">
+            <div style="width: calc(100% - 1px);height: 46px;margin-top:5px;background: white;border-radius: 20px;border: 1px gray solid;">
+              <input type="text" placeholder="搜索" style="font-size:20px;width: calc(100% - 65px);height: 43px;margin-left: 15px;border: none;outline:none;"/>
+              <button style="float:right;width: 46px;height: 46px;border-radius: 50%;background: url(../../image/search.png) no-repeat;border: none;outline:none;cursor: pointer;"></button>
+            </div>
+
+          </div>
+
+        </div>
+        <div style="width: 100%;height: calc(100% - 56px - 24px);overflow-y:auto">
+
+          <div style="width: 100%;height: 150px;background: white;margin-top: 10px;">
+            <div class="my-container">
+            <div style="width: 100%;height: 50px;border-bottom: 1px gray solid;">
+              <h2 style="line-height: 50px;">和平县创建“广东省质量强县示范县” 质量满意度调查问卷</h2>
+            </div>
+            <div style="width: 100%;height: calc(100% - 51px);">
+<!--              <h2 style="line-height: 100px;">问卷内容</h2>-->
+              <i style="background: url(../../image/show.png) no-repeat center;background-size:cover;width:20px;height:20px;display: inline-block;"></i>
+              <sapn>查看</sapn>
+
+              <i class="edit" style="background: url(../../image/edit.png) no-repeat center;background-size:cover;width:20px;height:20px;display: inline-block;"></i>
+              <sapn class="edit">编辑</sapn>
+
+              <i style="background: url(../../image/delete.png) no-repeat center;background-size:cover;width:20px;height:20px;display: inline-block;"></i>
+              <sapn>删除</sapn>
+
+            </div>
+            </div>
+          </div>
+
+          <div style="width: 100%;height: 150px;background: white;margin-top: 10px;">
+            <div class="my-container">
+              <div style="width: 100%;height: 50px;border-bottom: 1px gray solid;">
+                <h2 style="line-height: 50px;">和平县创建“广东省质量强县示范县” 质量满意度调查问卷</h2>
+              </div>
+              <div style="width: 100%;height: calc(100% - 51px);">
+                <h2 style="line-height: 100px;">问卷内容</h2>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+<div class="my-footer" style="border-top: 1px black solid;">
+  <span style="line-height: 40px;text-align: center;">问卷调查</span>
+</div>
+</body>
+<script src="./user_survey.js"></script>
+</html>

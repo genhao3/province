@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+  <link rel="stylesheet" href="../../css/tooltip.css" type="text/css" />
+  <link rel="stylesheet" type="text/css" href="../../css/wangEditor-1.1.0-min.css"/>
+  <link rel="stylesheet" href="../../css/jBox.all.css" type="text/css" />
+
+  <script src="../../js/jquery-3.4.1.js"></script>
+
+  <!--  <script src="../../js/jquery-1.9.0.min.js"></script>-->
+  <script src='../../js/tooltip.js'></script>
+
+ <script src='../../js/wangEditor-1.1.0-min.js'></script>
+  <script src='../../js/jBox.all.js'></script>
+  <script src='../../js/template.js'></script>
+  <script src='../../js/vue.min.js'></script>
+<meta charset="UTF-8">
+    <title>编辑问卷</title>
+  <style>
+    body, html {
+      height: 100%;
+     width: 100%;
+    }
+    #ss-header {
+      position: relative;
+      z-index: 102;
+      width: 100%;
+      height: 42px;
+      background: #313131;
+      box-shadow: 0px 1px 0px 0px rgba(191,191,191,1);
+    }
+    .ss-cont {
+      display: flex;
+      margin: 0 auto;
+      text-align: left;
+      width: 75%;
+      height: calc(100% - 42px);
+      position: relative;
+    }
+    .tabQTypet {
+      background: #fff;
+      width: 224px;
+
+      padding-left: 6px;
+    }
+    .open{
+      width: 218px;
+      cursor: pointer;
+    }
+    li {
+
+      list-style: none;
+
+    }
+    .navlist li {
+
+      float: left;
+      width: 50%;
+
+    }
+    .navlist {
+
+      padding: 8px 0;
+      overflow: hidden;
+
+    }
+    .navlist li :hover {
+
+      background: #0095FF;
+      color: #fff;
+      border-radius: 10px;
+    }
+    .show_hidden{
+
+    }
+    .sanjiaoxing_down{
+       background: url(../../image/sanjiaodown.png) no-repeat center;
+       background-size:cover;
+       width:20px;
+       height:20px;
+     }
+    .sanjiaoxing_you{
+      background: url(../../image/sanjiaoyou.png) no-repeat center;
+      background-size:cover;
+      width:20px;
+      height:20px;
+    }
+    .title:hover{
+      background: ghostwhite;
+    }
+    .xuanxiang:hover{
+      background: ghostwhite;
+    }
+    .wjxui-btn{
+      width: 100px;
+      padding: 0;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 36px;
+      font-weight: 600;
+      cursor: pointer;
+      height: 36px;
+      background: #0095FF;
+      color: #fff !important;
+    }
+    .wjxui-btn:hover {
+
+      color: #fff !important;
+      background: #0086E6;
+    }
+    button{
+      background: #0095FF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body style="background: #f5f5f5; margin: 0px; padding: 0px;">
+<div style="height: 100%;width: 100%;">
+<div id="ss-header">
+</div>
+<div class="ss-cont">
+  <div style="width: 230px;height: 100%;overflow-y: auto;">
+    <ul class="tabQTypet" id="divNormal">
+      <li class="open">
+        <div class="show_hidden" style="height: 30px;">
+          <i class="sanjiaoxing_down" style="display: inline-block;"></i>
+          <sapn>选择题</sapn>
+        </div>
+        <ul class="navlist">
+          <li >
+            <div >
+            <i style="background: url(../../image/danxuan.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
+            <sapn onclick="add_xuanxiang(`danxuan`)">单选</sapn>
+            </div>
+          </li>
+          <li >
+            <div>
+            <i style="background: url(../../image/gou.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
+            <sapn onclick="add_xuanxiang(`duoxuan`)" >多选</sapn>
+            </div>
+          </li>
+<!--          <li >-->
+<!--            <div>-->
+<!--            <i style="background: url(../../image/down_up.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>-->
+<!--            <sapn onclick="add_xuanxiang(`xialakuang`)" >下拉框</sapn>-->
+<!--            </div>-->
+<!--          </li>-->
+
+        </ul>
+      </li>
+      <li class="open">
+        <div class="show_hidden" style="height: 30px;">
+          <i class="sanjiaoxing_down" style="display: inline-block;"></i>
+          <sapn>填空题</sapn>
+        </div>
+        <ul class="navlist">
+          <li >
+            <div>
+              <i style="background: url(../../image/I.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
+              <sapn>单选填空</sapn>
+            </div>
+          </li>
+
+        </ul>
+      </li>
+
+
+<!--      <li class="open"></li>-->
+    </ul>
+  </div>
+  <div style="width: calc(100% - 240px);margin-top:16px;height: calc(100% - 16px);  background: #fff;margin-left: 10px;overflow-y: auto;">
+    <div class="title" style="height: 120px;border-bottom:1px #ececec solid;cursor: pointer;">
+      <div style="height: 50%;">
+        <h2 style="text-align:center;line-height: 60px;">这是标题</h2>
+      </div>
+      <div style="height: 50%;">
+        <span >这是说明</span>
+      </div>
+    </div>
+    <div id="app">
+      <!--渲染列表模板-->
+    </div>
+<!--    <div class="xuanxiang" style="height: 120px;border-bottom:1px #ececec solid;cursor: pointer;">-->
+<!--      <div style="height: 50%;">-->
+<!--        <h2 style="text-align:center;line-height: 60px;">题目</h2>-->
+<!--      </div>-->
+<!--      <div style="height: 50%;">-->
+<!--        <span >选项</span>-->
+<!--      </div>-->
+<!--    </div>-->
+
+  </div>
+<!--    <div id="topnav" class="overflowBarStyle" style="height: 636px; visibility: visible;"></div>-->
+<!--    <div class="editContainBox survey " id="sur" style="height: 671px;"></div>-->
+
+</div>
+</div>
+<div id="gridform" style="display: none;">
+<div>
+  <span>标题：</span>
+  <input type="text" id="title_content" style="width: 493px;height: 34px;"/>
+</div>
+  <div style="display: flex;margin-top: 10px;">
+    <div style="width: 48px;height: 200px;">
+      <span style="line-height: 200px;">说明：</span>
+    </div>
+    <div style="width: 600px;height: 200px;margin-left: 4px;">
+      <div id="div1" style="width: 100%;height: 100%;"></div>
+    </div>
+
+  </div>
+  <div style="text-align: center;margin-top: 10px;">
+    <button class="wjxui-btn" onclick="title_edit()" >确认</button>
+  </div>
+</div>
+<!--<div id="xuanxiangform" style="display: none;">-->
+<!--  <div style="display: flex;">-->
+<!--    <div style="width: 48px;height: 100px;">-->
+<!--      <span style="line-height: 100px;">题目：</span>-->
+<!--    </div>-->
+<!--    <div style="width: 600px;height: 100px;margin-left: 4px;">-->
+<!--            <div id="div2" style="width: 100%;height: 100%;"></div>-->
+<!--    </div>-->
+<!--  </div>-->
+
+<!--  <div id="xuanxianggridform" style="margin-top: 10px;">-->
+<!--  </div>-->
+
+<!--  <div>-->
+<!--    <span>题目：</span>-->
+<!--    <div style="width: 600px;height: 100px;margin-left: 4px;">-->
+<!--      <div id="div2" style="width: 100%;height: 100%;"></div>-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <input type="text" id="xuanxiang_title" style="width: 493px;height: 34px;"/>&ndash;&gt;-->
+<!--  </div>-->
+<!--  <div style="display: flex;margin-top: 10px;">-->
+<!--    <div style="width: 48px;height: 200px;">-->
+<!--      <span style="line-height: 200px;">说明：</span>-->
+<!--    </div>-->
+<!--    <div style="width: 600px;height: 200px;margin-left: 4px;">-->
+<!--      <div id="div2" style="width: 100%;height: 100%;"></div>-->
+<!--    </div>-->
+
+<!--  </div>-->
+<!--  <div style="text-align: center;margin-top: 10px;">-->
+<!--    <button class="wjxui-btn" onclick="title_edit()" >确认</button>-->
+<!--  </div>-->
+</div>
+</body>
+<!--渲染模板-->
+<script id="add_items" type="text/html">
+  <div class="muban" data-index="<%=count%>">
+  <input class="title_content2" type="text"  style="height: 34px;width: 250px;margin-top: 5px;"/>
+  <span onclick="delete_(this)" style="cursor: pointer;">删除</span>
+  </div>
+</script>
+<!--单选的渲染模板-->
+<script id="danxuans" type="text/html">
+  <p class="r" data-index="<%=count%>" style="display: inline;"><input class="input_value" type="radio" name="" value="" /><span class="radio">选项</span></p>
+</script>
+<!--渲染id=app的模板-->
+<script id="apps" type="text/html">
+  <div data-index="<%=num%>" class="xuanxiang" style="height: auto;border-bottom:1px #ececec solid;">
+  <div id="app2" style="min-height: 120px">
+    <div style="height: 20%;min-height: 20px;">
+      <div class="show_hidden_func" style="float: right;display: none;">
+        <button>上移</button>
+        <button>下移</button>
+        <button onclick="xuanxiangedit(this)">编辑</button>
+        <button>删除</button>
+      </div>
+    </div>
+    <div style="min-height: 40%;">
+      <span class="title_1" style="margin-top:10px;"><%=num%>. <span class="sp">题目</span></span>
+    </div>
+    <div style="min-height: 40%;">
+      <div id="danxuan">
+        <!--          单选模板-->
+      </div>
+    </div>
+  </div>
+  <div class="show_hidden_edit" style="display: none;border: 1px #0095FF solid;">
+    <div style="display: flex;">
+      <div style="width: 48px;height: 64px;">
+        <span style="line-height: 64px;">题目：</span>
+      </div>
+      <div style="width: calc(100% - 48px);height: 64px;">
+        <textarea class="title_content" style="resize:none;width: calc(100% - 10px);height: 64px;"></textarea>
+      </div>
+    </div>
+    <div style="margin-top: 10px;display: flex;">
+      <div style="width: 48px;height: auto;">
+        <span>选项：</span>
+      </div>
+      <div style="width: calc(100% - 48px);height: auto;">
+        <!--            <p><input type="radio" name="vehicle" value="Bike" />满意</p>-->
+        <div id="add_item_item" style="max-height: 200px;overflow-y: auto;background: white;">
+          <!--              模板-->
+        </div>
+        <div style="display: flex">
+        <div id="add_add" style="width:100px;margin-top: 10px; cursor: pointer;">
+          <i style="width: 16px;height: 16px;display: inline-block;background: url(../../image/add.png) no-repeat center;background-size:cover;"></i>
+          <span >增加选项</span>
+        </div>
+        <div style="margin-top: 10px;">
+          <span>类型：</span>
+          <select class="myselect" onchange="change_type(this)">
+            <option value="danxuan" <%if(xuanze_type=="danxuan") { %> selected="selected" <%} %>>单选</option>
+            <option value="duoxuan" <%if(xuanze_type=="duoxuan") { %> selected="selected" <%} %>>多选</option>
+<!--            <option value="xialakuang" <%if(xuanze_type=="xialakuang") { %> selected="selected" <%} %>>下拉框</option>-->
+          </select>
+          <select class="fangxiang" onchange="change_fangxiang(this)">
+            <option value="horizontal">横向排列</option>
+            <option value="vertical">竖向排列</option>
+          </select>
+        </div>
+      </div>
+      </div>
+
+    </div>
+
+    <div style="text-align: center;margin-top: 10px;">
+      <button class="wjxui-btn" onclick="wancheng_edit(this)" >完成编辑</button>
+      <button class="wjxui-btn" onclick="quxiao_edit(this)" >取消编辑</button>
+    </div>
+  </div>
+</div>
+
+
+</script>
+<script src="./edit_survey.js"></script>
+</html>

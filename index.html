@@ -3,10 +3,29 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <title>province-front</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <my-component-a></my-component-a>
+      <my-component-b></my-component-b>
+    </div>
     <!-- built files will be auto injected -->
+
   </body>
+  <script>
+    Vue.component('my-component-a',{
+        template:'<div>component-a</div>'
+    })
+    var app=new Vue({
+        e1:'#app',
+        data:{},
+        components:{
+            'my-component-b':{
+                template: '<div>component-b</div>'
+            }
+        }
+    })
+  </script>
 </html>
