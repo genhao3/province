@@ -6,10 +6,13 @@
   <link rel="stylesheet" href="../../css/tooltip.css" type="text/css" />
   <link rel="stylesheet" type="text/css" href="../../css/wangEditor-1.1.0-min.css"/>
   <link rel="stylesheet" href="../../css/jBox.all.css" type="text/css" />
+  <link rel="stylesheet" href="../../js/ligerui/lib/ligerUI/skins/Aqua/css/ligerui-all.css"/>
+  <link rel="stylesheet" href="../../js/ligerui/lib/ligerUI/skins/CadetBlue/css/all.css"/>
 
   <script src="../../js/jquery-3.4.1.js"></script>
-
-  <!--  <script src="../../js/jquery-1.9.0.min.js"></script>-->
+  <script src="../../js/ligerui/lib/ligerUI/js/core/base.js"></script>
+  <script src="../../js/LG.js"></script>
+  <script src='../../js/ligerui/lib/ligerUI/js/plugins/ligerDialog.js'></script>
   <script src='../../js/tooltip.js'></script>
 
  <script src='../../js/wangEditor-1.1.0-min.js'></script>
@@ -124,7 +127,7 @@
 <div id="ss-header">
 </div>
 <div class="ss-cont">
-  <div style="width: 230px;height: 100%;overflow-y: auto;">
+  <div style="width: 230px;height: calc(100% - 16px);margin-top:16px;overflow-y: auto;">
     <ul class="tabQTypet" id="divNormal">
       <li class="open">
         <div class="show_hidden" style="height: 30px;">
@@ -162,7 +165,7 @@
           <li >
             <div>
               <i style="background: url(../../image/I.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
-              <sapn>单选填空</sapn>
+              <sapn onclick="add_xuanxiang(`tiankong`)">单选填空</sapn>
             </div>
           </li>
 
@@ -254,10 +257,12 @@
 </body>
 <!--渲染模板-->
 <script id="add_items" type="text/html">
+  <%for (var i=0;i< options_item;i++) {%>
   <div class="muban" data-index="<%=count%>">
   <input class="title_content2" type="text"  style="height: 34px;width: 250px;margin-top: 5px;"/>
   <span onclick="delete_(this)" style="cursor: pointer;">删除</span>
   </div>
+  <%}%>
 </script>
 <!--单选的渲染模板-->
 <script id="danxuans" type="text/html">
@@ -265,22 +270,27 @@
 </script>
 <!--渲染id=app的模板-->
 <script id="apps" type="text/html">
-  <div data-index="<%=num%>" class="xuanxiang" style="height: auto;border-bottom:1px #ececec solid;">
+  <div data-type="<%=type%>" data-index="<%=seq%>" class="xuanxiang" style="height: auto;border-bottom:1px #ececec solid;">
   <div id="app2" style="min-height: 120px">
     <div style="height: 20%;min-height: 20px;">
       <div class="show_hidden_func" style="float: right;display: none;">
-        <button>上移</button>
-        <button>下移</button>
+        <button onclick="moveup(this)">上移</button>
+        <button onclick="movedown(this)">下移</button>
         <button onclick="xuanxiangedit(this)">编辑</button>
-        <button>删除</button>
+        <button onclick="deletes(this)">删除</button>
       </div>
     </div>
     <div style="min-height: 40%;">
-      <span class="title_1" style="margin-top:10px;"><%=num%>. <span class="sp">题目</span></span>
+      <span class="title_1" style="margin-top:10px;"><%=seq%>. <span class="sp"><%=question%></span></span>
     </div>
     <div style="min-height: 40%;">
-      <div id="danxuan">
+      <div id="xuanxiang_item" <%if(type=='danxuan'){%> data-type="danxuan"<%}%> <%if(type=='duoxuan'){%> data-type="duoxuan"<%}%> <%if(type=='tiankong'){%> data-type="tiankong"<%}%> >
         <!--          单选模板-->
+        <% for(var i=0;i< options;i++) {%>
+
+        <p class="r" data-index="<%=i+1%>" style="display: inline;"> <%if(type=='danxuan' || type=='duoxuan') {%><input class="input_value" <%if(type=='danxuan') {%> type="radio" name="radio<%=seq%>" <%}%> <%if(type=='duoxuan'){%> type="checkbox" name="checkbox<%=seq%>" <%}%>  value="<%=xuanxiang[i]%>" /><span class="radio"><%=xuanxiang[i]%></span> <%}%> <%if(type=='tiankong'){%> <textarea class="advice" style="resize:none;width: calc(100% - 10px);min-height: 64px;"> <%=xuanxiang[i]%> </textarea> <%}%> </p>
+
+        <%}%>
       </div>
     </div>
   </div>
@@ -290,30 +300,38 @@
         <span style="line-height: 64px;">题目：</span>
       </div>
       <div style="width: calc(100% - 48px);height: 64px;">
-        <textarea class="title_content" style="resize:none;width: calc(100% - 10px);height: 64px;"></textarea>
+        <textarea class="title_content" style="resize:none;width: calc(100% - 10px);height: 64px;"><%=question%></textarea>
       </div>
     </div>
     <div style="margin-top: 10px;display: flex;">
       <div style="width: 48px;height: auto;">
-        <span>选项：</span>
+        <span><%if(type!='tiankong'){%>选项：<%}%><%if(type=='tiankong'){%>填空：<%}%></span>
       </div>
       <div style="width: calc(100% - 48px);height: auto;">
         <!--            <p><input type="radio" name="vehicle" value="Bike" />满意</p>-->
         <div id="add_item_item" style="max-height: 200px;overflow-y: auto;background: white;">
           <!--              模板-->
+          <%for (var i=0;i< options;i++) {%>
+          <div class="muban" data-index="<%=i+1%>">
+            <input class="title_content2" type="text" value="<%=xuanxiang[i]%>" style="height: 34px;width: 250px;margin-top: 5px;"/>
+            <%if(type!='tiankong'){%>
+            <span onclick="delete_(this)" style="cursor: pointer;">删除</span>
+            <%}%>
+          </div>
+          <%}%>
+
         </div>
-        <div style="display: flex">
+        <div style="display: flex; <%if(type=='tiankong'){%> display:none; <%}%> ">
         <div id="add_add" style="width:100px;margin-top: 10px; cursor: pointer;">
           <i style="width: 16px;height: 16px;display: inline-block;background: url(../../image/add.png) no-repeat center;background-size:cover;"></i>
           <span >增加选项</span>
         </div>
-        <div style="margin-top: 10px;">
+        <div style="margin-top: 10px;" >
           <span>类型：</span>
           <select class="myselect" onchange="change_type(this)">
-            <option value="danxuan" <%if(xuanze_type=="danxuan") { %> selected="selected" <%} %>>单选</option>
-            <option value="duoxuan" <%if(xuanze_type=="duoxuan") { %> selected="selected" <%} %>>多选</option>
-<!--            <option value="xialakuang" <%if(xuanze_type=="xialakuang") { %> selected="selected" <%} %>>下拉框</option>-->
-          </select>
+            <option value="danxuan" <%if(type=="danxuan") { %> selected="selected" <%} %>>单选</option>
+            <option value="duoxuan" <%if(type=="duoxuan") { %> selected="selected" <%} %>>多选</option>
+         </select>
           <select class="fangxiang" onchange="change_fangxiang(this)">
             <option value="horizontal">横向排列</option>
             <option value="vertical">竖向排列</option>
