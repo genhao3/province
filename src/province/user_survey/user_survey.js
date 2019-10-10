@@ -70,4 +70,22 @@ function creat_btn() {
 }
 $('#mymuban').on('click','.edit',function () {
   window.location.href="../edit_survey/edit_survey.html"
-})
+});
+//全部问卷
+function search_all_btn() {
+  $.ajax({
+    url:'http://182.61.26.241:8081/api/queryAllPaper',
+    type:'get',
+    accept: "application/json;charset=UTF-8",
+    dataType: "JSONP",
+    data:{},
+    //JSON.stringify
+    success: function (data) {
+      if (data) {
+        console.log(data)
+      } },
+    error: function () {
+      console.log('错误')
+    }
+  })
+}

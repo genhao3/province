@@ -26,6 +26,9 @@
       height: 100%;
      width: 100%;
     }
+    span{
+      font-size: 15px;
+    }
     #ss-header {
       position: relative;
       z-index: 102;
@@ -119,12 +122,34 @@
       border: none;
       cursor: pointer;
     }
-
+    .yulan{
+      cursor: pointer;
+    }
+    .yulan:hover{
+      background: #F5FBFF;
+    }
+    .wanchengedit{
+      background: #0095FF;
+      cursor: pointer;
+    }
+    .wanchengedit:hover{
+      background: #0086E6;
+    }
   </style>
 </head>
 <body style="background: #f5f5f5; margin: 0px; padding: 0px;">
 <div style="height: 100%;width: 100%;">
 <div id="ss-header">
+  <div style="display:flex;float:right;margin-right:12.5%;width: 200px;height: 100%;background: white;">
+    <div class="yulan" style="width: 80px;height: 100%;text-align: center;">
+      <i style="vertical-align:middle;background: url(../../image/yulan.png) no-repeat center;background-size:cover;width:20px;height:20px;display: inline-block;"></i>
+      <span style="font-size:16px;line-height:42px;vertical-align:middle;color: #0095FF" >预览</span>
+    </div>
+    <div class="wanchengedit" style="width: 120px;height: 100%;text-align: center;">
+      <i style="vertical-align:middle;background: url(../../image/whitegou.png) no-repeat center;background-size:cover;width:20px;height:20px;display: inline-block;"></i>
+      <span style="font-size:16px;line-height:42px;vertical-align:middle;color: white;" >完成编辑</span>
+    </div>
+  </div>
 </div>
 <div class="ss-cont">
   <div style="width: 230px;height: calc(100% - 16px);margin-top:16px;overflow-y: auto;">
@@ -132,19 +157,19 @@
       <li class="open">
         <div class="show_hidden" style="height: 30px;">
           <i class="sanjiaoxing_down" style="display: inline-block;"></i>
-          <sapn>选择题</sapn>
+          <span>选择题</span>
         </div>
         <ul class="navlist">
           <li >
             <div >
             <i style="background: url(../../image/danxuan.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
-            <sapn onclick="add_xuanxiang(`danxuan`)">单选</sapn>
+            <span onclick="add_xuanxiang(`danxuan`)">单选</span>
             </div>
           </li>
           <li >
             <div>
             <i style="background: url(../../image/gou.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
-            <sapn onclick="add_xuanxiang(`duoxuan`)" >多选</sapn>
+            <span onclick="add_xuanxiang(`duoxuan`)" >多选</span>
             </div>
           </li>
 <!--          <li >-->
@@ -159,13 +184,13 @@
       <li class="open">
         <div class="show_hidden" style="height: 30px;">
           <i class="sanjiaoxing_down" style="display: inline-block;"></i>
-          <sapn>填空题</sapn>
+          <span>填空题</span>
         </div>
         <ul class="navlist">
           <li >
             <div>
               <i style="background: url(../../image/I.png) no-repeat center;background-size:cover;width:16px;height:16px;display: inline-block;"></i>
-              <sapn onclick="add_xuanxiang(`tiankong`)">单选填空</sapn>
+              <span onclick="add_xuanxiang(`tiankong`)">单选填空</span>
             </div>
           </li>
 
@@ -179,10 +204,10 @@
   <div style="width: calc(100% - 240px);margin-top:16px;height: calc(100% - 16px);  background: #fff;margin-left: 10px;overflow-y: auto;">
     <div class="title" style="height: 120px;border-bottom:1px #ececec solid;cursor: pointer;">
       <div style="height: 50%;">
-        <h2 style="text-align:center;line-height: 60px;">这是标题</h2>
+        <h2 style="text-align:center;line-height: 60px;">"<%=title%>"</h2>
       </div>
       <div style="height: 50%;">
-        <span >这是说明</span>
+        <span >"<%=instructions%>"</span>
       </div>
     </div>
     <div id="app">
@@ -209,7 +234,7 @@
   <input type="text" id="title_content" style="width: 493px;height: 34px;"/>
 </div>
   <div style="display: flex;margin-top: 10px;">
-    <div style="width: 48px;height: 200px;">
+    <div style="height: 200px;">
       <span style="line-height: 200px;">说明：</span>
     </div>
     <div style="width: 600px;height: 200px;margin-left: 4px;">
@@ -288,7 +313,7 @@
         <!--          单选模板-->
         <% for(var i=0;i< options;i++) {%>
 
-        <p class="r" data-index="<%=i+1%>" style="display: inline;"> <%if(type=='danxuan' || type=='duoxuan') {%><input class="input_value" <%if(type=='danxuan') {%> type="radio" name="radio<%=seq%>" <%}%> <%if(type=='duoxuan'){%> type="checkbox" name="checkbox<%=seq%>" <%}%>  value="<%=xuanxiang[i]%>" /><span class="radio"><%=xuanxiang[i]%></span> <%}%> <%if(type=='tiankong'){%> <textarea class="advice" style="resize:none;width: calc(100% - 10px);min-height: 64px;"> <%=xuanxiang[i]%> </textarea> <%}%> </p>
+        <p class="r" data-index="<%=i+1%>" style=" <%if(style=='horizontal'){%> display: inline; <%}%> <%if(style=='vertical'){%> display: block; <%}%> "> <%if(type=='danxuan' || type=='duoxuan') {%><input class="input_value" <%if(type=='danxuan') {%> type="radio" name="radio<%=seq%>" <%}%> <%if(type=='duoxuan'){%> type="checkbox" name="checkbox<%=seq%>" <%}%>  value="<%=xuanxiang[i]%>" /><span class="radio"><%=xuanxiang[i]%></span> <%}%> <%if(type=='tiankong'){%> <textarea class="advice" style="resize:none;width: calc(100% - 10px);min-height: 64px;"> <%=xuanxiang[i]%> </textarea> <%}%> </p>
 
         <%}%>
       </div>
@@ -333,8 +358,8 @@
             <option value="duoxuan" <%if(type=="duoxuan") { %> selected="selected" <%} %>>多选</option>
          </select>
           <select class="fangxiang" onchange="change_fangxiang(this)">
-            <option value="horizontal">横向排列</option>
-            <option value="vertical">竖向排列</option>
+            <option value="horizontal" <%if(style=="horizontal") { %> selected="selected" <%} %>>横向排列</option>
+            <option value="vertical" <%if(style=="vertical") { %> selected="selected" <%} %>>竖向排列</option>
           </select>
         </div>
       </div>

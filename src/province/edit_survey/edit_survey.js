@@ -88,11 +88,14 @@ function xuanran(){
   // var tp2 = document.getElementById('danxuans').innerHTML;
   for(var i=0;i<json_data[0].data.length;i++){
     $('#app').append(template(tp1,{
+      title:json_data[0].title,
+      instructions:json_data[0].instructions,
       seq:json_data[0].data[i].seq,
       question:json_data[0].data[i].question,
       options:json_data[0].data[i].options.length,
       xuanxiang:json_data[0].data[i].options,
       type:json_data[0].data[i].type,
+      style:json_data[0].data[i].style,
     }));
   }
 }
@@ -377,7 +380,9 @@ function change_type(obj) {
   // else if($(obj).val()=='xialakuang'){
   //   del.attr('type','checkbox');
   // }
-  //var location=$(obj).parent()
+  var location=$(obj).parent().parent().parent().parent().parent().parent('.xuanxiang');
+  var list_index=location.data('index')-1;
+  json_data[0].data[list_index].type=$(obj).val();
 };
 //改变排列方向
 function change_fangxiang(obj) {
@@ -388,7 +393,9 @@ function change_fangxiang(obj) {
   else if($(obj).val()=='vertical') {
     del.css('display','block')
   }
-
+  var location=$(obj).parent().parent().parent().parent().parent().parent('.xuanxiang');
+  var list_index=location.data('index')-1;
+  json_data[0].data[list_index].style=$(obj).val();
 }
 //移动
 function moveup(obj) {
@@ -453,3 +460,9 @@ function deletes(obj) {
   })
 
 }
+//全部编辑完成
+$(".wanchengedit").click(function () {
+  sessionStorage.setItem("data",JSON.stringify(json_data));
+
+})
+
